@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.coffeemachine.models.CoffeeMachine;
-import ru.coffeemachine.models.CoffeeTask;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class CoffeeMachineResponse {
     private Long id;
 
     @Schema(description = "Список заказов кофе")
-    private List<CoffeeTask> coffeeTasks;
+    private List<CoffeeTaskResponse> coffeeTasks;
 
     public static CoffeeMachineResponse from(CoffeeMachine coffeeMachine) {
         return CoffeeMachineResponse.builder()
@@ -37,7 +36,7 @@ public class CoffeeMachineResponse {
                 .name(coffeeMachine.getName())
                 .state(coffeeMachine.getState().toString())
                 .numberCupsCoffeePrepared(coffeeMachine.getNumberCupsCoffeePrepared())
-                .coffeeTasks(coffeeMachine.getCoffeeTasks())
+                .coffeeTasks(CoffeeTaskResponse.from(coffeeMachine.getCoffeeTasks()))
                 .build();
     }
 }
