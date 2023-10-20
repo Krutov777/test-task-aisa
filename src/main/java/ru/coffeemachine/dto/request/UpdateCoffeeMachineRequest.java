@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.coffeemachine.models.CoffeeMachine;
 
 @Data
 @AllArgsConstructor
@@ -17,14 +18,14 @@ import lombok.NoArgsConstructor;
 public class UpdateCoffeeMachineRequest {
     @NotNull
     @Schema(description = "Идентификатор кофемашины", example = "1")
-    private Long id;
+    private Long coffeeMachineId;
 
     @NotBlank(message = "Имя не может быть пустым")
     @Size(min = 1, max = 20, message = "минимальный размер имени {min}, максимальный - {max}")
     @Schema(description = "имя кофемашины", example = "bosh123")
     private String name;
 
-    @NotBlank(message = "Состояние кофемашины не может быть пустым")
     @Schema(description = "Состояние кофемашины", example = "ON")
-    private String state;
+    @NotNull
+    private CoffeeMachine.State state;
 }

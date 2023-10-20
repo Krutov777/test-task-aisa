@@ -25,6 +25,8 @@ public class ControllerExceptionHandler {
                 .errors(Collections.singletonList(
                         ValidationExceptionResponse.ValidationErrorDto.builder()
                                 .message(exception.getMessage())
+                                .exception(exception.getClass().getCanonicalName())
+                                .object(exception.getClass().toString())
                                 .build()))
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
@@ -39,14 +41,15 @@ public class ControllerExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             ValidationExceptionResponse.ValidationErrorDto errorDto = ValidationExceptionResponse.ValidationErrorDto.builder()
                     .message(errorMessage)
+                    .exception(exception.getClass().getCanonicalName())
+                    .object(exception.getClass().toString())
                     .build();
 
-            String objectName = null;
-            if (error instanceof FieldError) {
+            String objectName;
+            if (error instanceof FieldError)
                 objectName = ((FieldError) error).getField();
-            } else if (error instanceof ObjectError) {
+            else
                 objectName = error.getObjectName();
-            }
             errorDto.setObject(objectName);
             errors.add(errorDto);
         });
@@ -61,6 +64,7 @@ public class ControllerExceptionHandler {
                         ValidationExceptionResponse.ValidationErrorDto.builder()
                                 .exception(exception.getClass().getCanonicalName())
                                 .message(exception.getMessage())
+                                .object(exception.getClass().toString())
                                 .build()))
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -75,6 +79,7 @@ public class ControllerExceptionHandler {
                         ValidationExceptionResponse.ValidationErrorDto.builder()
                                 .exception(exception.getClass().getCanonicalName())
                                 .message(exception.getMessage())
+                                .object(exception.getClass().toString())
                                 .build()))
                 .build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);

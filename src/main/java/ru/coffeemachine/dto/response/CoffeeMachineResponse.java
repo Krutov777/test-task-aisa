@@ -25,14 +25,14 @@ public class CoffeeMachineResponse {
     private Integer numberCupsCoffeePrepared;
 
     @Schema(description = "Идентификатор кофемашины", example = "1")
-    private Long id;
+    private Long coffeeMachineId;
 
     @Schema(description = "Список заказов кофе")
     private List<CoffeeTaskResponse> coffeeTasks;
 
     public static CoffeeMachineResponse from(CoffeeMachine coffeeMachine) {
         return CoffeeMachineResponse.builder()
-                .id(coffeeMachine.getId())
+                .coffeeMachineId(coffeeMachine.getId())
                 .name(coffeeMachine.getName())
                 .state(coffeeMachine.getState().toString())
                 .numberCupsCoffeePrepared(coffeeMachine.getNumberCupsCoffeePrepared())
