@@ -10,6 +10,8 @@ import ru.coffeemachine.models.CoffeeTask;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.coffeemachine.constants.GlobalConstants.formatter;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,26 +24,26 @@ public class CoffeeTaskResponse {
     @Schema(description = "Количество чашек кофе", example = "12")
     private Integer numberCupsCoffee;
 
-    @Schema(description = "Дата и время создания задачи", example = "2023-08-09T18:31:42")
+    @Schema(description = "Дата и время создания задачи", example = "2023-08-09 18:31:42")
     private String taskCreationDateTime;
 
-    @Schema(description = "Дата и время начала приготовления кофе", example = "2023-08-09T18:31:42")
+    @Schema(description = "Дата и время начала приготовления кофе", example = "2023-08-09 18:31:42")
     private String cookingStartDateTime;
 
-    @Schema(description = "Дата и время конца приготовления кофе", example = "2023-08-09T18:32:42")
+    @Schema(description = "Дата и время конца приготовления кофе", example = "2023-08-09 18:32:42")
     private String cookingCompletionDateTime;
 
     @Schema(description = "Идентификатор заказа", example = "1")
-    private Long id;
+    private Long taskId;
 
     public static CoffeeTaskResponse from(CoffeeTask coffeeTask) {
         return CoffeeTaskResponse.builder()
-                .id(coffeeTask.getId())
+                .taskId(coffeeTask.getId())
                 .status(coffeeTask.getStatus().toString())
                 .numberCupsCoffee(coffeeTask.getNumberCupsCoffee())
-                .taskCreationDateTime(coffeeTask.getTaskCreationDateTime().toString())
-                .cookingStartDateTime(coffeeTask.getCookingStartDateTime().toString())
-                .cookingCompletionDateTime(coffeeTask.getCookingCompletionDateTime().toString())
+                .taskCreationDateTime(coffeeTask.getTaskCreationDateTime().format(formatter))
+                .cookingStartDateTime(coffeeTask.getCookingStartDateTime() == null ? null : coffeeTask.getCookingStartDateTime().format(formatter))
+                .cookingCompletionDateTime(coffeeTask.getCookingCompletionDateTime() == null ? null : coffeeTask.getCookingCompletionDateTime().format(formatter))
                 .build();
     }
 
